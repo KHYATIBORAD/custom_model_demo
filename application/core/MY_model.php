@@ -1,6 +1,6 @@
  <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Custom_model extends CI_Model
+class MY_model extends CI_Model
 {
     public function __construct()
     {
@@ -112,13 +112,14 @@ class Custom_model extends CI_Model
      * @param  array $where          where array condition
      * @param  array $join           join table name
      * @param  array $join_condition join condition
+     * @param  string $type           join type
      * @return array                 [description]
      */
-    public function getRowsWhereJoin($table, $where, $join, $join_condition)
+    public function getRowsWhereJoin($table, $where, $join, $join_condition, $type)
     {
         $this->db->select(" * ")->from($table);
         for ($i = 0; $i < count($join); $i++) {
-            $this->db->join($join[$i], $join_condition[$i]);
+            $this->db->join($join[$i], $join_condition[$i], $type);
         }
         $this->db->where($where);
         $query = $this->db->get();
@@ -129,12 +130,12 @@ class Custom_model extends CI_Model
     /**
      * getDistinctRows() get distinct/unique rows from table
      * @param  string $table           table name
+     * @param  string $distinct_column column name
      * @param  array  $where           where condition array
      * @param  array  $or_where        or_where condition array
-     * @param  string $distinct_column column name
      * @return array                   
      */
-    public function getDistinctRows($table, $where = array(), $or_where = array(), $distinct_column)
+    public function getDistinctRows($table, $distinct_column, $where = array(), $or_where = array())
     {
         $this->db->select("DISTINCT($distinct_column)");
         //$this->db->select("*");
@@ -249,7 +250,7 @@ class Custom_model extends CI_Model
     {
         $this->db->where($where);
         $this->db->or_where($or_where);
-        $sql=$this->db->_delete($table);
+        $sql=$this->db->delete($table);
         // if(!$this->db->simple_query($sql)){
         // $result = $this->db->delete($table);
         if ($this->db->simple_query($sql)) {
