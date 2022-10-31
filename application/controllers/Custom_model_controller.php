@@ -27,7 +27,8 @@ class Custom_model_controller extends My_controller {
 	}
 
 	// GET ROWS FUNCTION TABLE DATA
-	public function get_values($data = ''){
+	public function get_values($data = '')
+	{
 		$input = $this->input->post('lastname');
 		$data =$this->cm->getvalue($input);
 		$query= $this->db->last_query();
@@ -38,10 +39,10 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);			
 	}
 
+	// GET ROWS SORTED FUNCTION 
 	public function get_rows_sorted($data = '')
 	{
 		$r_id = $this->input->post('r_id');
-		
 		$data = $this->cm->sorted($r_id);
 		$query = $this->db->last_query();
 		$output = [
@@ -51,8 +52,7 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);	
 	}
 
-
-
+	// GET ROW WHERE IN LIKE FUNCTION
 	public function get_rows_where_in_like($data = '')
 	{
 		$r_id = $this->input->post('r_id');
@@ -64,38 +64,24 @@ class Custom_model_controller extends My_controller {
 		];
 		echo json_encode($output);	
 	}
-
-	public function get_distinct_rows()
+	
+	// GET SINGLE ROWS IN DATABASE DATA
+	public function get_single_rows($data = '')
 	{
-		$where=array(
-			'r_id'=>'4'
-		);
-		$data =$this->cm->getDistinctRows('register',$where,'','country');
-		$query= $this->db->last_query();
+		$r_id = $this->input->post('r_id');
+		$data = $this->cm->get_Singlerow($r_id);
+		$query = $this->db->last_query();
 		$output = [
 			'data'  => $data,
-			'query' => $query
+			'query' => $query	
 		];
 		echo json_encode($output);	
 	}
 
-	public function get_single_rows()
-	{
-		$where=array(
-			'r_id'=>'6'
-		);
-		$data['userdata'] =$this->cm->getSingleRow('register',$where);
-		$query= $this->db->last_query();
-		$output = [
-			'data'  => $data,
-			'query' => $query
-		];
-		echo json_encode($output);	
-	}
-
+	// TOTAL COUNT IN DATABASE DATA ROW
 	public function get_total_count()
 	{
-		$data =$this->cm->getTotalCount('register');
+		$data =$this->cm->total_count();
 		$query= $this->db->last_query();
 		$output = [
 			'data'  => $data,
@@ -104,12 +90,11 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);	
 	}
 
-	public function get_count()
+	// GET COUNT FUNCTION 
+	public function get_count($data = '')
 	{
-		$where=array(
-			'r_id'=>'1'
-		);
-		$data =$this->cm->getCount('register',$where);
+		$r_id = $this->input->post('r_id');
+		$data =$this->cm->count($r_id);
 		$query= $this->db->last_query();
 		$output = [
 			'data'  => $data,
@@ -118,18 +103,49 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);	
 	}
 
+	// SINGLE VALUE FUNCTION
+	public function single_value($data = '')
+	{
+		$r_id = $this->input->post('r_id');
+		$data=$this->cm->single($r_id);
+		$query= $this->db->last_query();
+		$output = [
+			'data'  => $data,
+			'query' => $query
+		];
+		echo json_encode($output);	
+	}
+
+	// INPUT ID RECORD ARE AVAILABLE OR NOT!
+	public function check_avaibility($data = '')
+	{
+		$r_id = $this->input->post('r_id');
+		$data =$this->cm->check($r_id);
+		$query= $this->db->last_query();
+		$output = [
+			'data'  => $data,
+			'query' => $query
+		];
+		echo json_encode($output);	
+	}
+
+	// FIND IN SET FUNCTION 
+	public function find_in_set()
+	{
+		$data =$this->cm->find();
+		$query= $this->db->last_query();
+		$output = [
+			'data'  => $data,
+			'query' => $query
+		];
+		echo json_encode($output);	
+	}
+
+	// RECORD INSERT AND SHOW
 	public function insert_row()
 	{
-		$data=[
-			'firstname'=>'dwit',
-			'lastname'=>'borad',
-			'password'=>'123',
-			'contact'=>'9087654321',
-			'email'=>'dwit@mailinator.com',
-			'gender'=>'male',
-			'country'=>'india'
-		];
-		$insert_id =$this->cm->insertRow('register',$data);
+		$posted_data = $this->input->post();
+		$insert_id = $this->cm->datainsert($posted_data);
 		$query= $this->db->last_query();
 		$where = array(
 			'r_id' => $insert_id
@@ -142,15 +158,11 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);	
 	}
 
-	public function update_row()
+	// RECORD UPDATE FUNCTION
+	public function update_row($data = "")
 	{
-		$data=array(
-			'firstname'=>'kridha'
-		);
-		$where=array(
-			'r_id'=>'2'
-		);
-		$data =$this->cm->updateRow('register',$data,$where);
+		$r_id = $this->input->post('r_id');
+		$data =$this->cm->update_record($r_id);
 		$query= $this->db->last_query();
 		$output = [
 			'data'  => $data,
@@ -159,12 +171,11 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);	
 	}
 
-	public function delete_row()
+	// RECORD DELETE FUNCTION 
+	public function delete_row($data = "")
 	{
-		$where=array(
-			'r_id'=>'8'
-		);
-		$data =$this->cm->deleteRow('register',$where);
+		$r_id = $this->input->post('r_id');
+		$data =$this->cm->delete_record($r_id);
 		$query= $this->db->last_query();
 		$output = [
 			'data'  => $data,
@@ -173,49 +184,10 @@ class Custom_model_controller extends My_controller {
 		echo json_encode($output);	
 	}
 
-	public function single_value()
-	{
-		$where=array(
-			'r_id'=>'6'
-		);
-		$data['userdata'] =$this->cm->getSingleValue('register','lastname',$where);
-		$query= $this->db->last_query();
-		$output = [
-			'data'  => $data,
-			'query' => $query
-		];
-		echo json_encode($output);	
-	}
-
-	public function check_avaibility()
-	{
-		$where=array(
-			'r_id'=>'3'
-		);
-		$data =$this->cm->checkAvailability('register',$where);
-		$query= $this->db->last_query();
-		$output = [
-			'data'  => $data,
-			'query' => $query
-		];
-		echo json_encode($output);	
-	}
-
-	public function find_in_set()
-	{
-		$data =$this->cm->findInSet('register','firstname','khyati');
-		$query= $this->db->last_query();
-		$output = [
-			'data'  => $data,
-			'query' => $query
-		];
-		echo json_encode($output);	
-	}
-
+	// JOIN TABLE DATA SHOW
 	public function join()
 	{
-		$join_condition=['register.r_id=register_age.id'];
-		$data =$this->cm->getRowsWhereJoin('register',[],['register_age'],$join_condition);
+		$data =$this->cm->join_table();
 		$query= $this->db->last_query();
 		$output = [
 			'data'  => $data,

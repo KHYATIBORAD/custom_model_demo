@@ -164,7 +164,7 @@ class MY_model extends CI_Model
             return $query->row_array();
         }
         else{
-            return $query->row();    
+            return $query->row(); 
         }
     }
 
@@ -253,7 +253,7 @@ class MY_model extends CI_Model
         $sql=$this->db->delete($table);
         // if(!$this->db->simple_query($sql)){
         // $result = $this->db->delete($table);
-        if ($this->db->simple_query($sql)) {
+        if ($sql) {
             if ($this->db->affected_rows() >= 1) {
                 return true;
             }else{

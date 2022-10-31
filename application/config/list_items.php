@@ -13,15 +13,12 @@ $config['list_items'] = [
 	'get_single_rows' => 'GET SINGLE ROWS',
 	'get_total_count' => 'GET TOTAL COUNT',
 	'get_count' => 'GET COUNT',
-	'insert_row' => 'insert a row',
-	'update_row' => 'update a row',
-	'delete_row' => 'delete a row',
 	'single_value' => 'SINGLE VALUE',
 	'check_avaibility' => 'CHECK AVAIBILITY',
 	'find_in_set' => 'FIND IN SET',
+	'insert_row' => 'insert a row',
+	'update_row' => 'update a row',
+	'delete_row' => 'delete a row',
 	'join' => 'JOIN',
-	'left_join' => 'LEFT JOIN',
-	'right_join' => 'RIGHT JOIN',
-	'full_join' => 'FULL JOIN'
 ];
 
